@@ -48,46 +48,56 @@ public class JwtUtils {
         return null;
     }
 
-//    public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-//        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-//        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
-//                .path("/api")
-//                .maxAge(24 * 60 * 60)
-//                .httpOnly(false)
-//                .secure(false)
-//                .build();
-//        return cookie;
-//    }
-public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-    String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-
-    return ResponseCookie.from(jwtCookie, jwt)
+    public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
+                .path("/api")
+                .maxAge(24 * 60 * 60)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
+        return cookie;
+    }
+    //chatgpt
+//public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+//    String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+//
+//    return ResponseCookie.from(jwtCookie, jwt)
 //            .path("/api")              // IMPORTANT
-            .path("/")
-            .maxAge(24 * 60 * 60)
-            .httpOnly(true)           // SECURITY
-            .secure(true)             // REQUIRED for HTTPS
-            .sameSite("None")         // REQUIRED for Netlify → Render
-            .build();
-}
+//            .path("/")
+//            .maxAge(24 * 60 * 60)
+//            .httpOnly(true)           // SECURITY
+//            .secure(true)             // REQUIRED for HTTPS
+//            .sameSite("None")         // REQUIRED for Netlify → Render
+//            .build();
+//}
 
 
-//    public ResponseCookie getCleanJwtCookie() {
-//        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null)
-//                .path("/api")
-//                .build();
-//        return cookie;
-//    }
-public ResponseCookie getCleanJwtCookie() {
-    return ResponseCookie.from(jwtCookie, "")
-          //  .path("/api")
-            .path("/")
-            .maxAge(0)
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .build();
-}
+    public ResponseCookie getCleanJwtCookie() {
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null)
+                .path("/api")
+                .maxAge(0)
+//            .httpOnly(true)
+//            .secure(true)
+//            .sameSite("None")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
+        return cookie;
+    }
+    //chatgpt
+//public ResponseCookie getCleanJwtCookie() {
+//    return ResponseCookie.from(jwtCookie, "")
+//          //  .path("/api")
+//            .path("/")
+//            .maxAge(0)
+//            .httpOnly(true)
+//            .secure(true)
+//            .sameSite("None")
+//            .build();
+//}
 
 
     public String generateTokenFromUsername(String username) {
