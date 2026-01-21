@@ -62,7 +62,8 @@ public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
 
     return ResponseCookie.from(jwtCookie, jwt)
-            .path("/api")                // IMPORTANT
+//            .path("/api")              // IMPORTANT
+            .path("/")
             .maxAge(24 * 60 * 60)
             .httpOnly(true)           // SECURITY
             .secure(true)             // REQUIRED for HTTPS
@@ -79,7 +80,8 @@ public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
 //    }
 public ResponseCookie getCleanJwtCookie() {
     return ResponseCookie.from(jwtCookie, "")
-            .path("/api")
+          //  .path("/api")
+            .path("/")
             .maxAge(0)
             .httpOnly(true)
             .secure(true)
